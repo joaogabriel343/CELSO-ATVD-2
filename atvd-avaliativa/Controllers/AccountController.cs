@@ -1,22 +1,28 @@
-﻿    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.Mvc;
+﻿using atvd_avaliativa.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
-    public class AccountController : Controller
+public class AccountController : Controller
+{
+    private readonly AcademiaContext _context;
+    private readonly UserManager<IdentityUser> _userManager;
+    private readonly SignInManager<IdentityUser> _signInManager;
+    private readonly RoleManager<IdentityRole> _roleManager;
+
+    public AccountController(
+        AcademiaContext context,
+        UserManager<IdentityUser> userManager,
+        SignInManager<IdentityUser> signInManager,
+        RoleManager<IdentityRole> roleManager)
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
+        _context = context;
+        _userManager = userManager;
+        _signInManager = signInManager;
+        _roleManager = roleManager;
+    }
 
-        public AccountController(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
-            RoleManager<IdentityRole> roleManager)
-        {
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _roleManager = roleManager;
-        }
 
     [HttpGet]
     public IActionResult Register(string role)
@@ -46,6 +52,19 @@
 
                 await _userManager.AddToRoleAsync(user, role);
 
+                if (role == "Aluno")
+                {
+                    var alunoExistente = await _context.Alunos
+                        .FirstOrDefaultAsync(a => a.Email == model.Email);
+
+                    if (alunoExistente != null)
+                    {
+                        alunoExistente.IdentityUserId = user.Id;
+                        _context.Update(alunoExistente);
+                        await _context.SaveChangesAsync();
+                    }
+                }
+
                 await _signInManager.SignInAsync(user, isPersistent: false);
 
                 return RedirectToAction("Index", "Home");
@@ -60,6 +79,7 @@
         ViewBag.Role = role;
         return View(model);
     }
+
 
 
     [HttpGet]

@@ -21,6 +21,9 @@ namespace atvd_avaliativa.Models
 
         public int? PersonalID { get; set; }
         public Personal? Personal { get; set; }
+
+        public string? IdentityUserId { get; set; }
+
         public ICollection<Treino> Treinos { get; set; }
     }
 }

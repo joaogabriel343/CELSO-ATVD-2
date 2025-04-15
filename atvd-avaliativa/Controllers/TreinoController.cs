@@ -19,8 +19,8 @@ namespace atvd_avaliativa.Controllers
         public async Task<IActionResult> Index(string busca)
         {
             var userEmail = User.Identity.Name;
-            var aluno = await _context.Alunos.FirstOrDefaultAsync(a => a.Email == userEmail);
             var isPersonal = User.IsInRole("Personal");
+            var isAluno = User.IsInRole("Aluno");
 
             var treinos = _context.Treinos
                 .Include(t => t.Aluno)
@@ -29,12 +29,16 @@ namespace atvd_avaliativa.Controllers
                     .ThenInclude(te => te.Exercicio)
                 .AsQueryable();
 
-            if (aluno != null)
+            if (isAluno)
             {
-                treinos = treinos.Where(t => t.AlunoID == aluno.AlunoID);
+                var aluno = await _context.Alunos.FirstOrDefaultAsync(a => a.Email == userEmail);
+                if (aluno != null)
+                {
+                    treinos = treinos.Where(t => t.AlunoID == aluno.AlunoID);
+                }
             }
 
-            if (!isPersonal && !string.IsNullOrEmpty(busca))
+            if (!string.IsNullOrEmpty(busca))
             {
                 treinos = treinos.Where(t =>
                     t.Personal.Nome.Contains(busca) ||
@@ -46,7 +50,6 @@ namespace atvd_avaliativa.Controllers
 
             return View(await treinos.ToListAsync());
         }
-
 
 
         [Authorize(Roles = "Personal")]

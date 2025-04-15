@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using atvd_avaliativa.Models;
 
@@ -11,9 +12,11 @@ using atvd_avaliativa.Models;
 namespace atvd_avaliativa.Migrations
 {
     [DbContext(typeof(AcademiaContext))]
-    partial class AcademiaContextModelSnapshot : ModelSnapshot
+    [Migration("20250415113334_AddIdentityUserIdToAluno")]
+    partial class AddIdentityUserIdToAluno
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

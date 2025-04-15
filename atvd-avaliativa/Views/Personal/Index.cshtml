@@ -1,0 +1,108 @@
+﻿@model IEnumerable<atvd_avaliativa.Models.Personal>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<style>
+    h1 {
+        color: #6A5ACD;
+        text-shadow: 0 0 8px #6A5ACD88;
+        margin-bottom: 2rem;
+        animation: fadeIn 0.5s ease-in-out;
+    }
+
+    a[href*="Create"] {
+        background-color: #2567F5;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background 0.3s ease, transform 0.2s ease;
+        box-shadow: 0 0 12px rgba(37, 103, 245, 0.4);
+    }
+
+        a[href*="Create"]:hover {
+            background-color: #FFD700;
+            color: black;
+            transform: translateY(-2px);
+            box-shadow: 0 0 16px rgba(255, 215, 0, 0.6);
+        }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 2rem;
+        animation: fadeIn 0.6s ease-in-out;
+    }
+
+        .table th,
+        .table td {
+            padding: 12px 20px;
+            text-align: left;
+            border-bottom: 1px solid #6A5ACD88;
+            color: #ffffff;
+            background-color: #1c1c1c;
+        }
+
+        .table th {
+            background-color: #6A5ACD;
+            color: white;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .table tr:hover td {
+            background-color: #2b2b2b;
+        }
+
+        .table a {
+            margin: 0 5px;
+            text-decoration: none;
+            font-weight: bold;
+            color: #6A5ACD;
+            transition: color 0.3s ease;
+        }
+
+            .table a:hover {
+                color: #FFD700;
+            }
+
+  
+</style>
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Especialidade)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Especialidade)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.PersonalID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.PersonalID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.PersonalID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

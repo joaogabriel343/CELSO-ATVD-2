@@ -1,0 +1,123 @@
+﻿@model atvd_avaliativa.Models.Exercicio
+
+@{
+    ViewData["Title"] = "Edit";
+}
+<style>
+    h1 {
+        color: #FFD700;
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+        text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    }
+
+    h4 {
+        color: #6A5ACD;
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+        border-bottom: 2px solid #6A5ACD;
+        padding-bottom: 5px;
+    }
+
+    form {
+        background-color: rgba(255, 255, 255, 0.05);
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 0 25px rgba(106, 90, 205, 0.3);
+    }
+
+    label {
+        color: white;
+        font-weight: bold;
+    }
+
+    input.form-control {
+        background-color: #1e1e2f;
+        border: 1px solid #6A5ACD;
+        color: white;
+        border-radius: 10px;
+        padding: 10px;
+        margin-bottom: 15px;
+    }
+
+        input.form-control:focus {
+            border-color: #FFD700;
+            box-shadow: 0 0 10px #FFD70055;
+        }
+
+    .text-danger {
+        color: #FF6B6B;
+    }
+
+    .btn-primary {
+        background-color: #6A5ACD;
+        border-color: #6A5ACD;
+        font-weight: bold;
+        border-radius: 10px;
+        padding: 10px 20px;
+        transition: 0.3s ease;
+    }
+
+        .btn-primary:hover {
+            background-color: #FFD700;
+            border-color: #FFD700;
+            color: #1e1e2f;
+            box-shadow: 0 0 12px #FFD70088;
+        }
+
+    a {
+        color: #6A5ACD;
+        font-weight: bold;
+        text-decoration: none;
+        padding: 8px 16px;
+        border-radius: 10px;
+        transition: 0.3s ease;
+        display: inline-block;
+        margin-top: 15px;
+    }
+
+        a:hover {
+            color: #FFD700;
+            background-color: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 0 10px #FFD70088;
+        }
+</style>
+<h1>Edit</h1>
+
+<h4>Exercicio</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ExercicioID" />
+            <div class="form-group">
+                <label asp-for="Nome" class="control-label"></label>
+                <input asp-for="Nome" class="form-control" />
+                <span asp-validation-for="Nome" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Categoria" class="control-label"></label>
+                <input asp-for="Categoria" class="form-control" />
+                <span asp-validation-for="Categoria" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Descricao" class="control-label"></label>
+                <input asp-for="Descricao" class="form-control" />
+                <span asp-validation-for="Descricao" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
